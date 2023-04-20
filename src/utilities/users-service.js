@@ -7,5 +7,4 @@ export async function signUp(userData){
     const token = await usersApi.signUp(userData);
     return token;
 
-    return token;
 }
