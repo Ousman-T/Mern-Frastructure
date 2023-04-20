@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { signUp } from "../utilities/users-service";
 
 
 function SignUpForm(){
@@ -8,11 +9,23 @@ function SignUpForm(){
         password: '',
         confirm: '',
         error: ''
-    })
+    });
     const disable = formData.password !== formData.confirm;
-    const handleSubmit = (e) => { 
+    const handleSubmit = async (e) => { 
         e.preventDefault();
-        console.log(formData)
+        try {
+            console.log(formData)
+            // Data for the backend to create new user
+            const userData = {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password
+            }
+            // return a token with the user info
+            const user = await signUp(userData);
+        } catch (error) {
+            setFormData({...formData, error: "Sign up failed, Try again!"})
+        }
     };
     const handleChange = (evt) => {
         setFormData({...formData, [evt.target.name]: evt.target.value, error: ''})
@@ -36,6 +49,6 @@ function SignUpForm(){
             <p className="error-message">{formData.error}</p>
         </div>
     )
-}
+};
 
 export default SignUpForm;
