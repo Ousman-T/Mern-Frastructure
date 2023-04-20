@@ -23,6 +23,7 @@ function SignUpForm(){
             }
             // return a token with the user info
             const user = await signUp(userData);
+            console.log(user);
         } catch (error) {
             setFormData({...formData, error: "Sign up failed, Try again!"})
         }
